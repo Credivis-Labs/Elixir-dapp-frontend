@@ -1,0 +1,275 @@
+@import "tailwindcss";
+
+/* Neutral base, green accent. Two themes.
+   Surfaces step page < card < inset; the only saturated color is the accent,
+   used for state and value — never as a background wash. */
+
+/* Light — default on :root so nothing has its only definition in a media query. */
+:root {
+  --bg: #f4f5f4;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #eceeec;
+  --bg-inset: #e2e5e3;
+  --fg: #14171a;
+  --fg-muted: #5c6560;
+  --fg-faint: #8b938e;
+  --line: #dfe2e0;
+  --line-strong: #c7ccc9;
+  --accent: #12735f;
+  --accent-fg: #ffffff;
+  --accent-soft: #dcefe9;
+  --attn: #9a6212;
+  --attn-soft: #f6ead6;
+  --danger: #a52f2c;
+  --danger-soft: #f7dedd;
+  --ok: #1f7a4d;
+  --ok-soft: #dcefe2;
+  --seal: #14171a;
+  --seal-fg: #f4f5f4;
+  --glow: rgba(18, 115, 95, 0.07);
+  --grain: 0.02;
+}
+
+/* Dark — applied when the user chose dark, or when they chose nothing and the OS is dark. */
+:root[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  --bg: #0c0e0d;
+  --bg-elevated: #151817;
+  --bg-sunken: #1b1f1d;
+  --bg-inset: #232826;
+  --fg: #eef1ef;
+  --fg-muted: #98a19c;
+  --fg-faint: #626b66;
+  --line: #212624;
+  --line-strong: #333a37;
+  --accent: #3fbe97;
+  --accent-fg: #05130f;
+  --accent-soft: #122a23;
+  --attn: #dda54a;
+  --attn-soft: #2a2211;
+  --danger: #db6660;
+  --danger-soft: #2c1715;
+  --ok: #4fb98a;
+  --ok-soft: #10261d;
+  --seal: #eef1ef;
+  --seal-fg: #0c0e0d;
+  --glow: rgba(63, 190, 151, 0.08);
+  --grain: 0.035;
+}
+
+/* Explicit light choice must win over the OS default above. */
+:root[data-theme="light"] {
+  --bg: #f4f5f4;
+  --bg-elevated: #ffffff;
+  --bg-sunken: #eceeec;
+  --bg-inset: #e2e5e3;
+  --fg: #14171a;
+  --fg-muted: #5c6560;
+  --fg-faint: #8b938e;
+  --line: #dfe2e0;
+  --line-strong: #c7ccc9;
+  --accent: #12735f;
+  --accent-fg: #ffffff;
+  --accent-soft: #dcefe9;
+  --attn: #9a6212;
+  --attn-soft: #f6ead6;
+  --danger: #a52f2c;
+  --danger-soft: #f7dedd;
+  --ok: #1f7a4d;
+  --ok-soft: #dcefe2;
+  --seal: #14171a;
+  --seal-fg: #f4f5f4;
+  --glow: rgba(18, 115, 95, 0.07);
+  --grain: 0.02;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f4f5f4;
+    --bg-elevated: #ffffff;
+    --bg-sunken: #eceeec;
+    --bg-inset: #e2e5e3;
+    --fg: #14171a;
+    --fg-muted: #5c6560;
+    --fg-faint: #8b938e;
+    --line: #dfe2e0;
+    --line-strong: #c7ccc9;
+    --accent: #12735f;
+    --accent-fg: #ffffff;
+    --accent-soft: #dcefe9;
+    --attn: #9a6212;
+    --attn-soft: #f6ead6;
+    --danger: #a52f2c;
+    --danger-soft: #f7dedd;
+    --ok: #1f7a4d;
+    --ok-soft: #dcefe2;
+    --seal: #14171a;
+    --seal-fg: #f4f5f4;
+    --glow: rgba(18, 115, 95, 0.07);
+    --grain: 0.02;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-sunken: var(--bg-sunken);
+  --color-inset: var(--bg-inset);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-faint: var(--fg-faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-attn: var(--attn);
+  --color-attn-soft: var(--attn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-seal: var(--seal);
+  --color-seal-fg: var(--seal-fg);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+}
+
+html {
+  color-scheme: light dark;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+body {
+  background:
+    radial-gradient(1100px 640px at -10% -10%, var(--glow), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Film grain, so surfaces read as material rather than flat fills. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Meniscus: a hairline of accent on the top edge, for surfaces that want you. */
+.meniscus {
+  position: relative;
+}
+.meniscus::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent) 80%, transparent);
+}
+.meniscus::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 40px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent);
+  pointer-events: none;
+}
+
+.glass {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--fg) 5%, transparent),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 320ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes seal-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.seal-in {
+  animation: seal-in 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pour {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.pour {
+  transform-origin: bottom;
+  animation: pour 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
